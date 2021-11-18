@@ -1,0 +1,78 @@
+body {
+	background-color: white;
+	color: black;
+}
+
+span.plus { color: red }
+span.minus { color: green }
+
+#chart {
+	margin: 0 auto;
+	width: 960px;
+}
+
+#chart>.header>.changeMode {
+	padding: 0 .25em;
+	width: 8em;
+	background-color: lightsteelblue;
+	border-radius: 4px;
+	text-align: center;
+	float: right;
+}
+#chart>.header>.changeMode:hover { background-color: lightpink; }
+
+#chart>.line { font-weight: bold; }
+
+#chart>.data {
+	padding: 0 .25em;
+	width: 10em;
+	background-color: rgba(255,255,255,.75);
+	border: solid 1px black;
+}
+
+#chart>.data dt {
+	padding-right: 1em;
+	float: left;
+	font-weight: bold;
+}
+
+#chart>.data dd { text-align: right; }
+
+/******************************************************************************
+  sub chart
+******************************************************************************/
+
+table { margin: 1em auto; }
+
+.subchart {
+	margin: 1em auto;
+	width: 480px;
+	float: left;
+}
+
+.subchart>.header>.changeMode {
+	padding: 0 .25em;
+	width: 8em;
+	background-color: lightsteelblue;
+	border-radius: 4px;
+	text-align: center;
+	float: right;
+}
+.subchart>.header>.changeMode:hover { background-color: lightpink; }
+
+.subchart>.line { font-weight: bold; }
+
+.subchart>.data {
+	padding: 0 .25em;
+	width: 10em;
+	background-color: rgba(255,255,255,.75);
+	border: solid 1px black;
+}
+
+.subchart>.data dt {
+	padding-right: 1em;
+	float: left;
+	font-weight: bold;
+}
+
+.subchart>.data dd { text-align: right; }
