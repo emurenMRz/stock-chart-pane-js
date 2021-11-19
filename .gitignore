@@ -1,3 +1,4 @@
+dist/
 docs/stock-chart-pane.js
 node_modules/
 package-lock.json
