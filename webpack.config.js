@@ -6,7 +6,7 @@ module.exports = {
 		'stock-chart-pane': path.resolve(__dirname, 'src/chart-pane.js'),
 	},
 	output: {
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(__dirname, 'docs'),
 		publicPath: '/',
 		filename: '[name].js',
 		module: true,
