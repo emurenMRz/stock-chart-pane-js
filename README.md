@@ -2,6 +2,10 @@
 
 指定したHTMLElementに株価表示用のローソク足チャートを描画します。
 
+## 動作確認ページ
+
+Pages: https://emurenmrz.github.io/stock-chart-pane-js/
+
 ## 使い方
 
 1. 必要なパッケージをインストールします。
