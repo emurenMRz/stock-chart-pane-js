@@ -60,8 +60,7 @@ export default class StockChartPane {
 		this.#chart.setData(csv, this.#setting.dateRange, averageCost);
 		const nowPrice = this.#chart.nowPrice;
 		this.#updatePrice(nowPrice);
-		if (averageCost > 0)
-			this.#updateDelta(nowPrice, averageCost);
+		this.#updateDelta(nowPrice, averageCost);
 		return nowPrice;
 	}
 
@@ -141,15 +140,20 @@ export default class StockChartPane {
 	}
 
 	#updateDelta(nowPrice, averageCost) {
-		const delta = nowPrice - averageCost;
-		const rate = ((nowPrice / averageCost - 1) * 100).toFixed(3);
-		const signPrice = v => (v > 0 ? '+' : '') + Utility.formatPrice(v);
-		const sign = v => (v > 0 ? '+' : '') + v;
+		if (averageCost > 0) {
+			const delta = nowPrice - averageCost;
+			const rate = ((nowPrice / averageCost - 1) * 100).toFixed(3);
+			const signPrice = v => (v > 0 ? '+' : '') + Utility.formatPrice(v);
+			const sign = v => (v > 0 ? '+' : '') + v;
 
-		const span = this.#elements.header.querySelector('.delta');
-		span.classList.toggle('plus', delta > 0);
-		span.classList.toggle('minus', delta < 0);
-		span.textContent = `(${signPrice(delta)}円 ${sign(rate)}%)`;
+			const span = this.#elements.header.querySelector('.delta');
+			span.classList.toggle('plus', delta > 0);
+			span.classList.toggle('minus', delta < 0);
+			span.textContent = `(${signPrice(delta)}円 ${sign(rate)}%)`;
+		} else {
+			const span = this.#elements.header.querySelector('.delta');
+			span.textContent = '';
+		}
 	}
 
 	/******************************************************************************
