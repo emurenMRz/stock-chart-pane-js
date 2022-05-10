@@ -140,20 +140,27 @@ export default class StockChartPane {
 	}
 
 	#updateDelta(nowPrice, averageCost) {
-		if (averageCost > 0) {
+		const spanFrame = this.#elements.header.querySelector('.delta');
+		spanFrame.textContent = '';
+
+		const deltaSpan = averageCost => {
 			const delta = nowPrice - averageCost;
 			const rate = ((nowPrice / averageCost - 1) * 100).toFixed(3);
 			const signPrice = v => (v > 0 ? '+' : '') + Utility.formatPrice(v);
 			const sign = v => (v > 0 ? '+' : '') + v;
 
-			const span = this.#elements.header.querySelector('.delta');
+			const span = document.createElement('span');
 			span.classList.toggle('plus', delta > 0);
 			span.classList.toggle('minus', delta < 0);
 			span.textContent = `(${signPrice(delta)}円 ${sign(rate)}%)`;
-		} else {
-			const span = this.#elements.header.querySelector('.delta');
-			span.textContent = '';
-		}
+			spanFrame.appendChild(span);
+		};
+
+		if (typeof averageCost === 'number')
+			deltaSpan(averageCost);
+		else if (averageCost instanceof Array)
+			for (const cost of averageCost)
+				deltaSpan(cost);
 	}
 
 	/******************************************************************************

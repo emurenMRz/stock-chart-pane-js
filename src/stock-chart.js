@@ -106,7 +106,7 @@ export default class StockChart {
 	 * 時系列データをセットする
 	 * @param {Array[]} db 新しい日付順の時系列データ。[0]日付、[1]始値、[2]高値、[3]安値、[4]終値、[5]出来高(、[6]売買代金)
 	 * @param {Number} dateRange 表示する日数
-	 * @param {Number} averageCost 平均取得単価。保持していない銘柄の場合は0
+	 * @param {Number|Array} averageCost 平均取得単価。保持していない銘柄の場合は0。配列で複数の値を渡すことができる
 	 */
 	setData(db, dateRange, averageCost = 0) {
 		for (const v of db)
@@ -304,10 +304,18 @@ export default class StockChart {
 		this.#drawChartCommon(toPixel(this.#minPrice), toPixel(this.#maxPrice), toPixel);
 
 		//平均取得単価
-		if (this.#averageCost > this.#minPrice && this.#averageCost < this.#maxPrice) {
-			const averagePos = toPixel(this.#averageCost);
-			this.#graph.drawLine(0, averagePos, this.#graph.width, averagePos, this.#color.averageCost);
-		}
+		const avgCostLine = avgCost => {
+			if (avgCost > this.#minPrice && avgCost < this.#maxPrice) {
+				const averagePos = toPixel(avgCost);
+				this.#graph.drawLine(0, averagePos, this.#graph.width, averagePos, this.#color.averageCost);
+			}
+		};
+
+		if (typeof this.#averageCost === 'number')
+			avgCostLine(this.#averageCost);
+		else
+			for (const cost of this.#averageCost)
+				avgCostLine(cost);
 
 		//ローソク足チャート
 		const w = this.#candleWidth;
@@ -328,8 +336,17 @@ export default class StockChart {
 		ctx.fillStyle = '#' + this.#color.text.toString(16);
 		ctx.fillText(Utility.formatPrice(this.#minPrice), 0, toPixel(this.#minPrice));
 		ctx.fillText(Utility.formatPrice(this.#maxPrice), 0, toPixel(this.#maxPrice));
-		if (this.#averageCost > this.#minPrice && this.#averageCost < this.#maxPrice)
-			ctx.fillText(Utility.formatPrice(this.#averageCost), 0, toPixel(this.#averageCost));
+
+		const avgCostText = avgCost => {
+			if (avgCost > this.#minPrice && avgCost < this.#maxPrice)
+				ctx.fillText(Utility.formatPrice(avgCost), 0, toPixel(avgCost));
+		};
+
+		if (typeof this.#averageCost === 'number')
+			avgCostText(this.#averageCost);
+		else
+			for (const cost of this.#averageCost)
+				avgCostText(cost);
 	}
 
 	/**
